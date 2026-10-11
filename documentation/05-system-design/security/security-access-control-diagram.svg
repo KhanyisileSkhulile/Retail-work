@@ -1,7 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1100" height="650" viewBox="0 0 1100 650">
   <rect width="1100" height="650" fill="#030712"/>
   <text x="550" y="48" fill="#f9fafb" font-family="Arial" font-size="27" font-weight="bold" text-anchor="middle">Retail X Security &amp; Access Control</text>
-  <text x="550" y="76" fill="#9ca3af" font-family="Arial" font-size="14" text-anchor="middle">M06-05 | Proposed Security Architecture</text>
 
   <rect x="35" y="105" width="1030" height="455" rx="18" fill="none" stroke="#475569" stroke-dasharray="7 5"/>
   <text x="55" y="130" fill="#94a3b8" font-family="Arial" font-size="12">RETAIL X SECURITY BOUNDARY</text>
