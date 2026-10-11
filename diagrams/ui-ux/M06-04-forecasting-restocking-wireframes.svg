@@ -13,13 +13,13 @@
     </style>
   </defs>
   <rect class="bg" width="1440" height="1040"/>
-  <text x="40" y="42" class="white title">Retail-X-AI | M06-04 Screen Wireframes</text>
-  <text x="40" y="68" class="muted body">Forecasting and restocking • Dark UI • Design proposal, not a live application</text>
+  <text x="40" y="42" class="white title">Retail X</text>
+  <text x="40" y="68" class="muted body">Forecasting and restocking • Inventory intelligence and demand planning</text>
 
   <!-- Forecasting screen -->
   <rect x="32" y="92" width="676" height="910" rx="14" class="panel"/>
   <rect x="32" y="92" width="676" height="58" rx="14" fill="#172438"/>
-  <text x="54" y="127" class="white heading">01 / Demand Forecasting</text>
+  <text x="54" y="127" class="white heading">Demand Forecasting</text>
   <text x="54" y="178" class="muted small">NAVIGATION</text>
   <text x="54" y="202" class="muted body">Dashboard  /  Inventory  /</text>
   <rect x="270" y="185" width="112" height="27" rx="6" fill="#24446a"/>
@@ -83,7 +83,7 @@
   <!-- Restocking screen -->
   <rect x="732" y="92" width="676" height="910" rx="14" class="panel"/>
   <rect x="732" y="92" width="676" height="58" rx="14" fill="#172438"/>
-  <text x="754" y="127" class="white heading">02 / Restocking Recommendations</text>
+  <text x="754" y="127" class="white heading">Restocking Recommendations</text>
   <text x="754" y="178" class="muted small">NAVIGATION</text>
   <text x="754" y="202" class="muted body">Dashboard  /  Inventory  /  Forecasting  /</text>
   <rect x="1040" y="185" width="118" height="27" rx="6" fill="#24446a"/>
