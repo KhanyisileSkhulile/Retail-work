@@ -28,9 +28,9 @@ Logical database schema for Retail-X-AI, based on:
 ## Dependency Status
 | Task | Status | Impact |
 |------|--------|--------|
-| M02-04 — Data Dictionary | ✅ Read | Types, ranges, quality issues confirmed |
-| M02-05 — Forecasting target & leakage | ✅ Read | Target column identified |
-| M04-01 — AI model design | ⏳ Pending | §3.7 feature refinement deferred |
+| M02-04 — Data Dictionary |  Read | Types, ranges, quality issues confirmed |
+| M02-05 — Forecasting target & leakage |  Read | Target column identified |
+| M04-01 — AI model design |  Pending | §3.7 feature refinement deferred |
 
 ## Known Data Quality Issues
 - `Demand Forecast` contains **673 negative values** (min = -9.99).
@@ -42,10 +42,10 @@ Logical database schema for Retail-X-AI, based on:
 @KhanyisileSkhulile614
 
 ## Status
-- [x] Entities identified
-- [x] ERD drawn (to be exported)
-- [x] Schema written
-- [x] Data requirements documented
-- [x] Sample queries added
-- [ ] PR merged
-- [ ] Issue #33 closed
+-  Entities identified
+-  ERD drawn (to be exported)
+-  Schema written
+-  Data requirements documented
+-  Sample queries added
+-  PR merged
+  Issue #33 closed
