@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="650" viewBox="0 0 1100 650">
+  <rect width="1100" height="650" fill="#030712"/>
+  <text x="550" y="48" fill="#f9fafb" font-family="Arial" font-size="27" font-weight="bold" text-anchor="middle">Retail X Security &amp; Access Control</text>
+
+  <rect x="35" y="105" width="1030" height="455" rx="18" fill="none" stroke="#475569" stroke-dasharray="7 5"/>
+  <text x="55" y="130" fill="#94a3b8" font-family="Arial" font-size="12">RETAIL X SECURITY BOUNDARY</text>
+
+  <g font-family="Arial" text-anchor="middle">
+    <rect x="65" y="170" width="210" height="100" rx="12" fill="#111827" stroke="#64748b" stroke-width="2"/>
+    <text x="170" y="205" fill="#f9fafb" font-size="18" font-weight="bold">User</text>
+    <text x="170" y="230" fill="#cbd5e1" font-size="13">Owner / Manager</text>
+    <text x="170" y="250" fill="#cbd5e1" font-size="13">or Administrator</text>
+
+    <rect x="325" y="170" width="210" height="100" rx="12" fill="#172554" stroke="#60a5fa" stroke-width="2"/>
+    <text x="430" y="205" fill="#dbeafe" font-size="18" font-weight="bold">Authentication</text>
+    <text x="430" y="232" fill="#bfdbfe" font-size="13">Validate credentials</text>
+    <text x="430" y="251" fill="#bfdbfe" font-size="13">Protect sign-in</text>
+
+    <rect x="585" y="170" width="210" height="100" rx="12" fill="#172554" stroke="#60a5fa" stroke-width="2"/>
+    <text x="690" y="205" fill="#dbeafe" font-size="18" font-weight="bold">Session &amp; Identity</text>
+    <text x="690" y="232" fill="#bfdbfe" font-size="13">Identify user role</text>
+    <text x="690" y="251" fill="#bfdbfe" font-size="13">Protect session</text>
+
+    <rect x="845" y="170" width="190" height="100" rx="12" fill="#172554" stroke="#60a5fa" stroke-width="2"/>
+    <text x="940" y="205" fill="#dbeafe" font-size="18" font-weight="bold">Backend RBAC</text>
+    <text x="940" y="232" fill="#bfdbfe" font-size="13">Check permissions</text>
+    <text x="940" y="251" fill="#bfdbfe" font-size="13">Deny by default</text>
+
+    <g stroke="#94a3b8" stroke-width="2.5" fill="none">
+      <path d="M275 220 H325"/>
+      <path d="M315 213 L325 220 L315 227"/>
+      <path d="M535 220 H585"/>
+      <path d="M575 213 L585 220 L575 227"/>
+      <path d="M795 220 H845"/>
+      <path d="M835 213 L845 220 L835 227"/>
+      <path d="M940 270 V315 H550 V350"/>
+      <path d="M543 340 L550 350 L557 340"/>
+    </g>
+
+    <rect x="205" y="350" width="690" height="110" rx="12" fill="#132e27" stroke="#34d399" stroke-width="2"/>
+    <text x="550" y="381" fill="#d1fae5" font-size="19" font-weight="bold">Authorised Retail Features</text>
+    <text x="550" y="408" fill="#a7f3d0" font-size="14">Products • Sales • Inventory • Dashboard • Alerts</text>
+    <text x="550" y="431" fill="#a7f3d0" font-size="14">Forecasting • Restocking • AI Assistant • Admin Functions</text>
+
+    <rect x="65" y="350" width="120" height="110" rx="12" fill="#3b1720" stroke="#fb7185" stroke-width="2"/>
+    <text x="125" y="390" fill="#fecdd3" font-size="15" font-weight="bold">Access</text>
+    <text x="125" y="411" fill="#fecdd3" font-size="15" font-weight="bold">Denied</text>
+    <text x="125" y="435" fill="#fda4af" font-size="11">Unauthorised</text>
+    <path d="M940 270 V300 H125 V350" fill="none" stroke="#fb7185" stroke-width="2" stroke-dasharray="5 5"/>
+
+    <rect x="205" y="490" width="690" height="48" rx="10" fill="#312e18" stroke="#fbbf24" stroke-width="2"/>
+    <text x="550" y="510" fill="#fef3c7" font-size="16" font-weight="bold">Security Audit Logging</text>
+    <text x="550" y="528" fill="#fde68a" font-size="12">Login outcomes • Denied access • Role changes • Admin actions</text>
+    <path d="M330 460 V480 H400 V490 M770 460 V480 H700 V490 M185 405 H195 V514 H205" fill="none" stroke="#fbbf24" stroke-width="1.5" stroke-dasharray="5 4"/>
+  </g>
+
+  <text x="550" y="600" fill="#9ca3af" font-family="Arial" font-size="13" text-anchor="middle">Design proposal only — controls must be implemented and tested.</text>
+</svg>
