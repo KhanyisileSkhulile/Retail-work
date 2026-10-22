@@ -23,14 +23,15 @@
 - [x] Chronological ordering
 - [x] Identical columns
 - [x] No dates shared between splits
-- [x] All rows accounted for
+- [x] Split rows match combined dataset
+- [x] All usable rows retained
 - [x] No missing target values
 
 ### Missing target values
 
-- **Training:** 0
-- **Validation:** 0
-- **Test:** 0
+- Training: 0
+- Validation: 0
+- Test: 0
 
 ## Leakage prevention
 

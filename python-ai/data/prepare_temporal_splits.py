@@ -88,6 +88,7 @@ def main():
         "Test": int(test_df[target_column].isna().sum()),
     }
 
+
     checks = {
         "Chronological ordering": chronological,
         "Identical columns": same_columns,
@@ -98,3 +99,21 @@ def main():
             count == 0 for count in missing_targets.values()
         ),
     }
+
+    print("\nValidation results:")
+    for check_name, passed in checks.items():
+        status = "PASS" if passed else "FAIL"
+        print(f"[{status}] {check_name}")
+
+    if not all(checks.values()):
+        raise RuntimeError("Temporal split validation failed.")
+
+    print("\nSplit summary:")
+    print(f"Training rows: {len(train_df):,}")
+    print(f"Validation rows: {len(validation_df):,}")
+    print(f"Test rows: {len(test_df):,}")
+    print(f"Report: {REPORT_FILE}")
+
+
+if __name__ == "__main__":
+    main()
