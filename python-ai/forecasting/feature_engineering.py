@@ -190,3 +190,99 @@ def prepare_forecasting_data(df, train_fraction=0.8):
     }
 
     return train_output, test_output, prepared_output, metadata
+
+
+def prepare_forecasting_train_validation_test(
+    df,
+    train_fraction=0.70,
+    validation_fraction=0.15,
+):
+    """Prepare leakage-safe chronological train/validation/test data."""
+
+    if not 0 < train_fraction < 1:
+        raise ValueError("train_fraction must be between 0 and 1.")
+
+    if not 0 < validation_fraction < 1:
+        raise ValueError("validation_fraction must be between 0 and 1.")
+
+    if train_fraction + validation_fraction >= 1:
+        raise ValueError(
+            "train_fraction + validation_fraction must be less than 1."
+        )
+
+    # Reuse M10-03's feature engineering and training-only preprocessing.
+    train_df, holdout_df, _, metadata = prepare_forecasting_data(
+        df,
+        train_fraction=train_fraction,
+    )
+
+    # Split the remaining dates chronologically into validation and test.
+    holdout_dates = (
+        holdout_df["Date"].drop_duplicates().sort_values().tolist()
+    )
+
+    if len(holdout_dates) < 2:
+        raise ValueError(
+            "At least two holdout dates are required for "
+            "validation and testing."
+        )
+
+    validation_share_of_holdout = (
+        validation_fraction / (1 - train_fraction)
+    )
+
+    validation_date_count = round(
+        len(holdout_dates) * validation_share_of_holdout
+    )
+
+    validation_date_count = max(
+        1, min(validation_date_count, len(holdout_dates) - 1)
+    )
+
+    validation_test_cutoff = holdout_dates[validation_date_count]
+
+    validation_df = holdout_df.loc[
+        holdout_df["Date"] < validation_test_cutoff
+    ].reset_index(drop=True)
+
+    test_df = holdout_df.loc[
+        holdout_df["Date"] >= validation_test_cutoff
+    ].reset_index(drop=True)
+
+    # Combine all three splits for reproducible output.
+    prepared_df = (
+        pd.concat(
+            [train_df, validation_df, test_df],
+            ignore_index=True,
+        )
+        .sort_values("Date", kind="stable")
+        .reset_index(drop=True)
+    )
+
+    # Record evidence for the M10-04 report.
+    metadata.update({
+        "train_rows": len(train_df),
+        "validation_rows": len(validation_df),
+        "test_rows": len(test_df),
+        "train_start": train_df["Date"].min(),
+        "train_end": train_df["Date"].max(),
+        "validation_start": validation_df["Date"].min(),
+        "validation_end": validation_df["Date"].max(),
+        "test_start": test_df["Date"].min(),
+        "test_end": test_df["Date"].max(),
+        "train_unique_dates": train_df["Date"].nunique(),
+        "validation_unique_dates": validation_df["Date"].nunique(),
+        "test_unique_dates": test_df["Date"].nunique(),
+        "train_validation_cutoff_date": holdout_dates[0],
+        "validation_test_cutoff_date": validation_test_cutoff,
+        "train_fraction": train_fraction,
+        "validation_fraction": validation_fraction,
+        "test_fraction": 1 - train_fraction - validation_fraction,
+        "feature_columns": [
+            column
+            for column in train_df.columns
+            if column not in ("Date", TARGET_COLUMN)
+        ],
+    })
+
+    return train_df, validation_df, test_df, prepared_df, metadata
