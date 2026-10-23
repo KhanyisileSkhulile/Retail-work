@@ -6,6 +6,15 @@ import pandas as pd
 
 TARGET_COLUMN = "Units Sold"
 
+GROUP_COLUMNS = ["Store ID", "Product ID"]
+DEMAND_HISTORY_COLUMNS = [
+    "demand_lag_1",
+    "demand_lag_7",
+    "demand_lag_14",
+    "demand_rolling_mean_7",
+    "demand_rolling_mean_28",
+]
+
 # Exclude these columns because they may reveal information from
 # after the day's sales or directly encode the forecasting outcome.
 EXCLUDED_COLUMNS = [
@@ -29,6 +38,37 @@ NUMERIC_COLUMNS = [
     "Competitor Pricing",
     "Holiday/Promotion",
 ]
+
+def add_demand_history_features(df):
+    """Add past-demand features without using the current or future target.
+
+    Rolling features use the previous observations for each store-product
+    series. They are intended for rolling one-step-ahead forecasting, where
+    prior observed demand is available when the next prediction is made.
+    """
+
+    data = df.sort_values(
+        ["Store ID", "Product ID", "Date"], kind="stable"
+    ).copy()
+    history = data.groupby(GROUP_COLUMNS, sort=False)[TARGET_COLUMN]
+
+    data["demand_lag_1"] = history.shift(1)
+    data["demand_lag_7"] = history.shift(7)
+    data["demand_lag_14"] = history.shift(14)
+
+    for window in (7, 28):
+        column = f"demand_rolling_mean_{window}"
+        data[column] = history.transform(
+            lambda values: values.shift(1).rolling(
+                window=window, min_periods=1
+            ).mean()
+        )
+
+    # Restore chronological order for the split logic that follows.
+    return data.sort_values(
+        ["Date", "Store ID", "Product ID"], kind="stable"
+    ).reset_index(drop=True)
+
 
 REQUIRED_COLUMNS = [
     "Date",
@@ -63,6 +103,9 @@ def prepare_forecasting_data(df, train_fraction=0.8):
     data = data.sort_values(
         ["Date", "Store ID", "Product ID"]
     ).reset_index(drop=True)
+
+    # Build lag/rolling features from earlier observations only.
+    data = add_demand_history_features(data)
 
     unique_dates = data["Date"].drop_duplicates().tolist()
     if len(unique_dates) < 2:
@@ -103,7 +146,7 @@ def prepare_forecasting_data(df, train_fraction=0.8):
         "is_weekend",
     ]
 
-    numeric_features = NUMERIC_COLUMNS + calendar_columns
+    numeric_features = NUMERIC_COLUMNS + DEMAND_HISTORY_COLUMNS + calendar_columns
 
     # Convert numeric fields and learn missing-value replacements
     # from the training period only.
@@ -187,6 +230,7 @@ def prepare_forecasting_data(df, train_fraction=0.8):
         "feature_columns": train_features.columns.tolist(),
         "excluded_columns": EXCLUDED_COLUMNS,
         "target_column": TARGET_COLUMN,
+        "demand_history_columns": DEMAND_HISTORY_COLUMNS,
     }
 
     return train_output, test_output, prepared_output, metadata
