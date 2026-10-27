@@ -1,0 +1,23 @@
+{
+  "issue": "M11-06",
+  "model_name": "Ridge Regression",
+  "target_column": "Units Sold",
+  "forecasting_method": "Rolling one-step-ahead chronological holdout",
+  "fit_end_date": "2023-09-13",
+  "forecast_start_date": "2023-09-14",
+  "forecast_end_date": "2024-01-01",
+  "forecast_rows": 11000,
+  "unique_forecast_dates": 110,
+  "feature_count": 58,
+  "mae": 88.45332508286131,
+  "rmse": 107.99672727067626,
+  "test_data_used_for_training": false,
+  "model_retrained_during_forecasting": false,
+  "output_files": [
+    "python-ai/forecasting/outputs/retail_demand_forecasts_m11_06.csv",
+    "python-ai/forecasting/outputs/retail_demand_daily_summary_m11_06.csv",
+    "python-ai/forecasting/outputs/daily_actual_vs_forecast_m11_06.png",
+    "python-ai/forecasting/outputs/actual_vs_forecast_scatter_m11_06.png",
+    "python-ai/forecasting/outputs/forecast_error_distribution_m11_06.png"
+  ]
+}
