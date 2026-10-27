@@ -1,4 +1,4 @@
-# M11-05 â€” Temporal Holdout Evaluation
+# M11-05 — Temporal Holdout Evaluation
 
 ## Objective
 
