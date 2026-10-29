@@ -1,0 +1,15 @@
+{
+  "issue": "M12-03",
+  "records_processed": 11000,
+  "unique_store_product_pairs": 100,
+  "date_start": "2023-09-14",
+  "date_end": "2024-01-01",
+  "status_counts": {
+    "STOCKOUT_RISK": 11000
+  },
+  "observed_stockout_count": 0,
+  "stockout_risk_count": 11000,
+  "watch_count": 0,
+  "output_file": "python-ai/restocking/outputs/retail_stockout_detection_m12_03.csv",
+  "important_note": "Historical replay against date-aligned inventory and M11-06 model forecasts; not a live alert feed or a guarantee of future availability."
+}
