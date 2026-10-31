@@ -27,7 +27,7 @@ INTENT_PATTERNS = (
     ("DEMAND_FORECAST", (r"\b(forecast|forecasted|prediction|predicted|demand estimate)\b",)),
     ("REORDER_RECOMMENDATION", (r"\b(reorder|re-stock|restock|order quantity|should .* order)\b",)),
     ("STOCKOUT_STATUS", (r"\b(stockout|stock out|out of stock|days of cover|stockout risk)\b",)),
-    ("SALES_FACTOR_ANALYSIS", (r"\b(weather|promotion|promotions|discount|seasonality|sales factor|affect sales|impact on sales)\b",)),
+    ("SALES_FACTOR_ANALYSIS", (r"\b(weather|promotion|promotions|discount|seasonality|sales factors?|affect sales|impact on sales)\b",)),
     ("TOP_SELLING_PRODUCTS", (r"\b(top selling|best.?selling|sold the most|most popular products|top products)\b",)),
     ("INVENTORY_LEVEL", (r"\b(inventory|stock level|how much stock|stock for|on.hand)\b",)),
     ("SALES_SUMMARY", (r"\b(sales|units sold|how many .* sold|sales summary)\b",)),
