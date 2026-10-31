@@ -171,13 +171,21 @@ def initialize_database(force_reload: bool = False) -> int:
         try:
             connection.execute("DELETE FROM inventory_records")
 
-            frame.to_sql(
-                "inventory_records",
-                connection,
-                if_exists="append",
-                index=False,
-                chunksize=5000,
+            columns = ", ".join(f'"{column}"' for column in frame.columns)
+            placeholders = ", ".join("?" for _ in frame.columns)
+            insert_sql = (
+                f"INSERT INTO inventory_records ({columns}) "
+                f"VALUES ({placeholders})"
             )
+
+            rows = (
+                tuple(
+                    value.item() if hasattr(value, "item") else value
+                    for value in row
+                )
+                for row in frame.itertuples(index=False, name=None)
+            )
+            connection.executemany(insert_sql, rows)
 
             imported_rows = connection.execute(
                 "SELECT COUNT(*) FROM inventory_records"
