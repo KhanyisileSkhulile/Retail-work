@@ -4,6 +4,14 @@ import pandas as pd
 import plotly.express as px
 from pathlib import Path
 from application.backend.chatbot.service import process_project_message
+from application.backend.forecasts.service import (
+    build_daily_summary,
+    filter_forecasts,
+    load_forecast_metadata,
+    load_forecasts,
+    summarize_forecasts,
+    validate_forecast_metadata,
+)
 
 # ============================================================
 # RETAILAI STREAMLIT DASHBOARD
@@ -740,185 +748,186 @@ elif page == "AI Forecasting":
         "🤖 AI Demand Forecasting"
     )
 
+    try:
+        forecast_data = load_forecasts()
+        forecast_metadata = load_forecast_metadata()
+        validate_forecast_metadata(
+            forecast_data,
+            forecast_metadata
+        )
 
-    if forecast_df is None:
+    except (FileNotFoundError, ValueError, OSError) as error:
 
         st.error(
-            "Run forecasting.py first."
+            f"Forecast integration is unavailable: {error}"
+        )
+
+        st.info(
+            "Check that the M11-06 forecast CSV and metadata exist, "
+            "then run python-ai/forecasting/integrate_forecasts.py."
         )
 
     else:
 
-        forecast_data = (
-            forecast_df.copy()
+        st.caption(
+            f"{forecast_metadata['model_name']} | "
+            f"{forecast_metadata['forecasting_method']}"
         )
 
+        st.info(
+            "These are rolling one-step-ahead predictions from the "
+            "chronological holdout period. They compare actual and "
+            "predicted demand; they are not a new 7-day future forecast."
+        )
 
         stores_forecast = sorted(
-            forecast_data[
-                "Store_ID"
-            ].unique()
+            forecast_data["Store ID"].unique()
         )
-
 
         forecast_store = st.selectbox(
             "Select Store",
-            stores_forecast
+            stores_forecast,
+            key="m14_03_forecast_store"
         )
 
-
         products_forecast = sorted(
-            forecast_data[
-                forecast_data[
-                    "Store_ID"
-                ] == forecast_store
-            ][
-                "Product_ID"
+            forecast_data.loc[
+                forecast_data["Store ID"] == forecast_store,
+                "Product ID"
             ].unique()
         )
 
-
         forecast_product = st.selectbox(
             "Select Product",
-            products_forecast
+            products_forecast,
+            key="m14_03_forecast_product"
         )
 
+        min_forecast_date = forecast_data["Date"].min().date()
+        max_forecast_date = forecast_data["Date"].max().date()
 
-        future = forecast_data[
-            (
-                forecast_data[
-                    "Store_ID"
-                ] == forecast_store
+        selected_date_range = st.date_input(
+            "Forecast date range",
+            value=(min_forecast_date, max_forecast_date),
+            min_value=min_forecast_date,
+            max_value=max_forecast_date,
+            key="m14_03_forecast_date_range"
+        )
+
+        if (
+            isinstance(selected_date_range, (tuple, list))
+            and len(selected_date_range) == 2
+        ):
+            forecast_start_date, forecast_end_date = selected_date_range
+        else:
+            forecast_start_date = selected_date_range
+            forecast_end_date = selected_date_range
+
+        forecast_view = filter_forecasts(
+            forecast_data,
+            store_id=forecast_store,
+            product_id=forecast_product,
+            start_date=forecast_start_date,
+            end_date=forecast_end_date
+        )
+
+        if forecast_view.empty:
+
+            st.warning(
+                "No forecast records match the selected filters."
             )
-            &
-            (
-                forecast_data[
-                    "Product_ID"
-                ] == forecast_product
+
+        else:
+
+            forecast_summary = summarize_forecasts(
+                forecast_view
             )
-        ].copy()
 
+            metric1, metric2, metric3 = st.columns(3)
 
-        historical = sales_df[
-            (
-                sales_df[
-                    "Store ID"
-                ] == forecast_store
+            metric1.metric(
+                "Forecast Records",
+                f"{forecast_summary['records']:,}"
             )
-            &
-            (
-                sales_df[
-                    "Product ID"
-                ] == forecast_product
+
+            metric2.metric(
+                "Mean Absolute Error",
+                f"{forecast_summary['mae']:.2f} units"
             )
-        ].copy()
 
-
-        historical = (
-            historical
-            .sort_values(
-                "Date"
+            metric3.metric(
+                "Root Mean Squared Error",
+                f"{forecast_summary['rmse']:.2f} units"
             )
-            .tail(30)
-        )
 
+            st.markdown("---")
 
-        historical_plot = historical[
-            [
-                "Date",
-                "Units Sold"
-            ]
-        ].copy()
-
-
-        historical_plot[
-            "Type"
-        ] = "Historical"
-
-
-        historical_plot = (
-            historical_plot
-            .rename(
-                columns={
-                    "Units Sold":
-                        "Units"
-                }
+            st.subheader(
+                "📈 Actual Demand vs AI Forecast"
             )
-        )
 
-
-        future_plot = future[
-            [
-                "Date",
-                "Predicted_Units_Sold"
-            ]
-        ].copy()
-
-
-        future_plot[
-            "Type"
-        ] = "AI Forecast"
-
-
-        future_plot = future_plot.rename(
-            columns={
-                "Predicted_Units_Sold":
-                    "Units"
-            }
-        )
-
-
-        chart_data = pd.concat(
-            [
-                historical_plot,
-                future_plot
-            ],
-            ignore_index=True
-        )
-
-
-        fig = px.line(
-            chart_data,
-            x="Date",
-            y="Units",
-            color="Type",
-            markers=True,
-            title=(
-                f"{forecast_store} - "
-                f"{forecast_product}"
+            comparison_data = forecast_view[
+                [
+                    "Date",
+                    "Actual Units Sold",
+                    "Forecast Units Sold"
+                ]
+            ].melt(
+                id_vars=["Date"],
+                var_name="Demand Type",
+                value_name="Units"
             )
-        )
 
+            comparison_chart = px.line(
+                comparison_data,
+                x="Date",
+                y="Units",
+                color="Demand Type",
+                markers=True,
+                title=(
+                    f"{forecast_store} - "
+                    f"{forecast_product}"
+                )
+            )
 
-        st.plotly_chart(
-            fig,
-            use_container_width=True
-        )
+            st.plotly_chart(
+                comparison_chart,
+                use_container_width=True
+            )
 
+            st.subheader(
+                "📅 Daily Demand Summary"
+            )
 
-        st.subheader(
-            "7-Day AI Forecast"
-        )
+            daily_forecast = build_daily_summary(
+                forecast_view
+            )
 
+            daily_chart = px.line(
+                daily_forecast,
+                x="Date",
+                y=[
+                    "Actual Demand Total",
+                    "Forecast Demand Total"
+                ],
+                markers=True,
+                title="Daily Actual and Forecast Demand"
+            )
 
-        st.dataframe(
-            future,
-            hide_index=True,
-            use_container_width=True
-        )
+            st.plotly_chart(
+                daily_chart,
+                use_container_width=True
+            )
 
+            st.subheader(
+                "Forecast Records"
+            )
 
-        total_forecast = (
-            future[
-                "Predicted_Units_Sold"
-            ].sum()
-        )
-
-
-        st.metric(
-            "Predicted 7-Day Sales",
-            f"{total_forecast:.0f} units"
-        )
+            st.dataframe(
+                forecast_view,
+                hide_index=True,
+                use_container_width=True
+            )
 
 
 # ============================================================
