@@ -1,0 +1,171 @@
+{
+  "issue": "M15-03",
+  "overall_status": "PASS_WITH_WARNINGS",
+  "checks": [
+    {
+      "check": "forecast_schema",
+      "status": "PASS",
+      "detail": "All required forecast columns are present."
+    },
+    {
+      "check": "forecast_numeric_values",
+      "status": "PASS",
+      "detail": "Actuals, forecasts and absolute errors are finite numeric values."
+    },
+    {
+      "check": "forecast_non_negative",
+      "status": "PASS",
+      "detail": "Actual demand and predicted demand are non-negative."
+    },
+    {
+      "check": "forecast_dates_valid",
+      "status": "PASS",
+      "detail": "All forecast dates parse successfully."
+    },
+    {
+      "check": "forecast_business_keys_unique",
+      "status": "PASS",
+      "detail": "Duplicate Date/Store/Product keys: 0."
+    },
+    {
+      "check": "forecast_absolute_error_consistent",
+      "status": "PASS",
+      "detail": "Absolute Error matches |Actual Units Sold - Forecast Units Sold|."
+    },
+    {
+      "check": "forecast_metrics_recomputed",
+      "status": "PASS",
+      "detail": "CSV MAE=88.453325, RMSE=107.996727; M11-06 summary MAE=88.453325, RMSE=107.996727."
+    },
+    {
+      "check": "m11_05_and_m11_06_metrics_agree",
+      "status": "PASS",
+      "detail": "Recomputed rolling-output metrics agree with the M11-05 temporal holdout evaluation."
+    },
+    {
+      "check": "forecast_no_test_leakage",
+      "status": "PASS",
+      "detail": "M11-05/M11-06 metadata explicitly reports no test-data fitting or model refitting."
+    },
+    {
+      "check": "forecast_date_coverage",
+      "status": "PASS",
+      "detail": "CSV covers 2023-09-14 to 2024-01-01 across 110 unique dates."
+    },
+    {
+      "check": "forecast_row_count",
+      "status": "PASS",
+      "detail": "Forecast CSV rows=11000, M11-06 summary=11000, M11-05 test rows=11000."
+    },
+    {
+      "check": "reorder_schema",
+      "status": "PASS",
+      "detail": "All required reorder columns are present."
+    },
+    {
+      "check": "stockout_schema",
+      "status": "PASS",
+      "detail": "All required stockout columns are present."
+    },
+    {
+      "check": "reorder_forecast_key_alignment",
+      "status": "PASS",
+      "detail": "Forecast keys=11000, reorder keys=11000, missing=0, extra=0."
+    },
+    {
+      "check": "stockout_forecast_key_alignment",
+      "status": "PASS",
+      "detail": "Forecast keys=11000, stockout keys=11000, missing=0, extra=0."
+    },
+    {
+      "check": "reorder_key_uniqueness",
+      "status": "PASS",
+      "detail": "Duplicate reorder keys: 0."
+    },
+    {
+      "check": "stockout_key_uniqueness",
+      "status": "PASS",
+      "detail": "Duplicate stockout keys: 0."
+    },
+    {
+      "check": "reorder_quantities_valid",
+      "status": "PASS",
+      "detail": "Suggested order quantities are finite, present and non-negative."
+    },
+    {
+      "check": "reorder_status_values",
+      "status": "PASS",
+      "detail": "Observed statuses: ['REORDER_NOW']."
+    },
+    {
+      "check": "reorder_now_has_positive_quantity",
+      "status": "PASS",
+      "detail": "REORDER_NOW rows=11000; all have positive suggested quantities."
+    },
+    {
+      "check": "stockout_status_values",
+      "status": "PASS",
+      "detail": "Observed statuses: ['STOCKOUT_RISK']."
+    },
+    {
+      "check": "observed_stockout_zero_stock",
+      "status": "PASS",
+      "detail": "Rows labelled STOCKOUT have zero recorded inventory."
+    },
+    {
+      "check": "stockout_risk_positive_stock",
+      "status": "PASS",
+      "detail": "Rows labelled STOCKOUT_RISK have positive recorded stock."
+    },
+    {
+      "check": "reorder_summary_matches_csv",
+      "status": "PASS",
+      "detail": "CSV status counts={'REORDER_NOW': 11000}; summary counts={'REORDER_NOW': 11000}."
+    },
+    {
+      "check": "stockout_summary_matches_csv",
+      "status": "PASS",
+      "detail": "CSV status counts={'STOCKOUT_RISK': 11000}; summary counts={'STOCKOUT_RISK': 11000}."
+    },
+    {
+      "check": "reorder_status_distribution",
+      "status": "WARN",
+      "detail": "100.0% of rows are REORDER_NOW; review demand/stock scaling and baseline assumptions before operational use."
+    },
+    {
+      "check": "stockout_status_distribution",
+      "status": "WARN",
+      "detail": "100.0% of rows are STOCKOUT_RISK; this is a concentrated risk signal and should be reviewed before operational use."
+    }
+  ],
+  "metrics": {
+    "mae": 88.45332508286131,
+    "rmse": 107.99672727067626,
+    "forecast_rows": 11000,
+    "forecast_unique_dates": 110,
+    "forecast_start_date": "2023-09-14",
+    "forecast_end_date": "2024-01-01",
+    "reorder_rows": 11000,
+    "reorder_status_counts": {
+      "REORDER_NOW": 11000
+    },
+    "reorder_now_share": 1.0,
+    "total_suggested_order_units": 4505211,
+    "stockout_rows": 11000,
+    "stockout_status_counts": {
+      "STOCKOUT_RISK": 11000
+    },
+    "stockout_risk_share": 1.0,
+    "observed_stockout_count": 0
+  },
+  "validated_at_utc": "2026-11-01T21:42:15.633616+00:00",
+  "source_files": [
+    "python-ai/forecasting/outputs/retail_demand_forecasts_m11_06.csv",
+    "python-ai/forecasting/artifacts/retail_demand_ridge_test_evaluation.json",
+    "python-ai/forecasting/outputs/retail_demand_forecast_summary_m11_06.json",
+    "python-ai/restocking/outputs/retail_restocking_recommendations_m12_02.csv",
+    "python-ai/restocking/outputs/retail_restocking_summary_m12_02.json",
+    "python-ai/restocking/outputs/retail_stockout_detection_m12_03.csv",
+    "python-ai/restocking/outputs/retail_stockout_detection_summary_m12_03.json"
+  ]
+}

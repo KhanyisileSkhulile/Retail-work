@@ -1,0 +1,19 @@
+{
+  "issue": "M12-02",
+  "recommendation_method": "Reorder point and target stock using M12-01 assumptions",
+  "lead_time_days": 3,
+  "review_period_days": 1,
+  "safety_stock_days": 1,
+  "records_processed": 11000,
+  "unique_store_product_pairs": 100,
+  "date_start": "2023-09-14",
+  "date_end": "2024-01-01",
+  "status_counts": {
+    "REORDER_NOW": 11000
+  },
+  "reorder_now_count": 11000,
+  "records_with_positive_order_quantity": 11000,
+  "total_suggested_order_units": 4505211,
+  "output_file": "python-ai/restocking/outputs/retail_restocking_recommendations_m12_02.csv",
+  "important_note": "These are historical replay recommendations aligned to the forecast dataset dates, not live recommendations for current inventory."
+}

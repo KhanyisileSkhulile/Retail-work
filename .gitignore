@@ -35,3 +35,9 @@ build/
 # Local datasets and generated files
 dataset/processed/*
 dataset/sample/*
+
+# Generated SQLite database and temporary journal files
+database/retail_inventory.db
+database/retail_inventory.db-journal
+database/retail_inventory.db-wal
+database/retail_inventory.db-shm

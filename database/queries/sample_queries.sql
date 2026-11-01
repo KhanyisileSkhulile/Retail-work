@@ -1,0 +1,24 @@
+-- Sample Queries for Retail-X-AI
+
+-- 1. Find top 5 products by units sold
+SELECT p.Product_Name, SUM(i.Units_Sold) as Total_Units_Sold
+FROM INVENTORY_RECORD i
+JOIN PRODUCT p ON i.Product_ID = p.Product_ID
+GROUP BY p.Product_Name
+ORDER BY Total_Units_Sold DESC
+LIMIT 5;
+
+-- 2. Calculate total revenue by store (Price * Units Sold)
+SELECT s.Store_Name, SUM(i.Units_Sold * p.Unit_Price) as Total_Revenue
+FROM INVENTORY_RECORD i
+JOIN STORE s ON i.Store_ID = s.Store_ID
+JOIN PRODUCT p ON i.Product_ID = p.Product_ID
+GROUP BY s.Store_Name
+ORDER BY Total_Revenue DESC;
+
+-- 3. Find items where inventory level is lower than units ordered (Restock Alert)
+SELECT i.Date_ID, s.Store_Name, p.Product_Name, i.Inventory_Level, i.Units_Ordered
+FROM INVENTORY_RECORD i
+JOIN STORE s ON i.Store_ID = s.Store_ID
+JOIN PRODUCT p ON i.Product_ID = p.Product_ID
+WHERE i.Inventory_Level < i.Units_Ordered;
