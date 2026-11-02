@@ -1,0 +1,353 @@
+# M17-02 — Complete System Analysis and Design Documentation
+
+## 1. Document Purpose
+
+This document consolidates the completed system analysis and design evidence for Retail-X-AI, a retail intelligence system designed to support sales monitoring, forecast-driven decision-making, inventory risk identification, and restocking guidance for small retail businesses.
+
+The purpose of this document is to bring together the system context, process modelling, architecture design, and security design into a coherent final record of the proposed Retail-X-AI solution. This document does not claim that every component has already been fully implemented; instead, it captures the approved logical design and the evidence that supports the design decisions.
+
+This document should be read alongside the following supporting artifacts already present in the repository:
+
+- M05-01 — System Context Diagram
+- M05-02 — DFD Level 0
+- M05-03 — DFD Level 1
+- M05-04 — Activity Diagrams
+- M05-05 — Sequence Diagrams
+- M05-06 — Complete System Analysis Documentation
+- M06-01 — System Architecture Design
+- M06-02 — Navigation and Wireframes
+- M06-03 — Dashboard UI
+- M06-04 — Forecasting and Restocking UI Wireframes
+- M06-05 — Security and Access Control Design
+
+---
+
+## 2. Project Overview
+
+Retail-X-AI is an AI-powered decision support system focused on retail inventory management. The system is intended to help shop owners and managers understand historical retail behaviour, detect inventory risk, generate demand forecasts, and receive actionable restocking recommendations.
+
+The solution is designed to support:
+
+- sales and inventory tracking
+- product analysis
+- demand forecasting
+- stockout risk detection
+- smart restocking suggestions
+- interactive AI-based assistance
+- operational dashboards and reporting
+
+The system is intended to be practical, understandable, and scalable for small retail operations while remaining grounded in the actual available dataset and approved business rules.
+
+---
+
+## 3. System Context
+
+The system receives information from:
+
+- the shop owner or manager
+- the historical retail dataset
+- product, sales, and inventory inputs
+- operational decisions made by the business user
+
+The system produces:
+
+- demand forecasts
+- stockout risk alerts
+- restocking recommendation outputs
+- dashboard summaries
+- AI-supported responses to business questions
+
+### External entities
+
+| Entity | Role |
+|---|---|
+| Shop Owner / Manager / User | Provides operational data, reviews outputs, and makes business decisions |
+| Historical Retail Dataset | Provides historical records used for analysis and forecasting |
+| Product Records | Represent product identifiers and product-related information |
+| Sales and Inventory Records | Represent daily retail operations and stock levels |
+
+### System boundary
+
+The system boundary includes the processes responsible for:
+
+- managing product, sales, and inventory data
+- analysing trends
+- forecasting demand
+- assessing stockout risk
+- generating restocking recommendations
+- providing an AI assistant interface
+- presenting operational dashboards and alerts
+
+---
+
+## 4. Functional Scope
+
+The Retail-X-AI system supports the following core business functions:
+
+1. Manage product data
+2. Capture and store sales and inventory information
+3. Analyse data trends and operational behaviour
+4. Forecast product demand
+5. Assess stockout risk and inventory pressure
+6. Generate restocking recommendations
+7. Present dashboard information and alerts
+8. Support AI-assisted queries based on approved system data
+
+### Functional requirements addressed
+
+The completed design aligns with the existing requirement statements and traceability evidence already captured in the repository.
+
+| Requirement Area | Design Coverage |
+|---|---|
+| Data capture | Sales and inventory management functions |
+| Retail analysis | Data analysis and forecast preparation |
+| Forecasting | Demand forecasting and evaluation |
+| Risk monitoring | Stockout-risk assessment |
+| Restocking support | Smart recommendation generation |
+| User interaction | Dashboard and AI assistant access |
+| Security | Role-based authentication and access control |
+| Traceability | Mapping of design artefacts to requirements |
+
+---
+
+## 5. System Analysis Summary
+
+### 5.1 DFD Level 0
+
+The Level 0 data flow model identifies the main processes of the system:
+
+- Manage Sales & Inventory Data
+- Analyse Retail Data
+- Forecast Product Demand
+- Assess Stockout Risk
+- Generate Smart Restocking Recommendations
+- Provide AI Assistant
+- Present Dashboard & Alerts
+
+These processes communicate through the major logical data stores:
+
+- D1 — Product Data
+- D2 — Sales & Inventory Data
+- D3 — Forecast & Analytics Data
+- D4 — Recommendations & Alerts
+
+This model confirms the main information flows from input data, through analysis and forecasting, to recommendations and business-facing outputs.
+
+### 5.2 DFD Level 1
+
+The Level 1 analysis expands the major functional processes into more detailed process steps. The design confirms that the system is oriented around:
+
+- data preparation and validation
+- historical pattern analysis
+- forecasting logic
+- risk analysis based on stock and demand
+- recommendation creation
+- interface display and decision support
+- AI-grounded responses
+
+### 5.3 Use Cases
+
+The system supports the major use cases associated with retail operations:
+
+| Use Case | Description |
+|---|---|
+| UC-01 | Review product and inventory status |
+| UC-02 | Analyse sales trends and store performance |
+| UC-03 | Generate demand forecasts |
+| UC-04 | Detect stockout risk |
+| UC-05 | Receive restocking recommendations |
+| UC-06 | Ask the AI assistant for information or guidance |
+
+These cases are consistent with the interaction model captured in the system design and support the resulting dashboard and recommendation flow.
+
+### 5.4 Activity and Sequence Views
+
+The activity and sequence diagrams describe the step-by-step behaviour of the system when the user requests operational insights, forecasting results, or recommendation support. These views support the interpretation that the system is event-driven and data-oriented, with decisions depending on validated input and available business information.
+
+---
+
+## 6. System Architecture Design
+
+The logical architecture for Retail-X-AI is structured as a layered design that separates responsibilities and encourages clarity, maintainability, and testability.
+
+### 6.1 Architecture layers
+
+| Layer | Purpose |
+|---|---|
+| Presentation Layer | Displays dashboards, alerts, recommendations, and AI assistant responses |
+| Application Layer | Validates requests, coordinates operations, and enforces authorisation |
+| Domain Services Layer | Implements sales, inventory, forecasting, risk assessment, and recommendation logic |
+| AI / ML Layer | Produces forecasts and supports AI-grounded assistance |
+| Data Layer | Stores logical product, sales, forecast, and recommendation data |
+
+### 6.2 Core design principles
+
+The architecture follows these principles:
+
+- separation of concerns
+- clear data ownership
+- validation of input data
+- transparent forecasting assumptions
+- no automatic decision-making without human review
+- support for explainable outputs
+- secure handling of user and business information
+
+### 6.3 Architectural assumptions
+
+The current design assumes:
+
+- the system will remain a decision-support platform rather than an autonomous purchasing system
+- the historical dataset remains a key data source
+- product, inventory, and sales records are the foundation for forecasting and risk detection
+- AI assistance must be grounded in approved system data
+- the shop owner or manager retains final responsibility for business actions
+
+---
+
+## 7. Security and Access Control Design
+
+The system design includes a proposed security model centred on role-based access control and secure session management.
+
+### 7.1 Roles
+
+| Role | Primary Responsibilities |
+|---|---|
+| Shop Owner / Manager | Access retail data, dashboards, forecasting, recommendations, and AI assistant features |
+| Administrator | Manage user accounts, roles, and system-level administration |
+
+### 7.2 Security objectives
+
+The system should:
+
+- authenticate users before allowing access to protected features
+- restrict access by role and permission
+- prevent privilege escalation
+- protect business data from unauthorised access
+- ensure AI-assisted access follows the same user permissions
+- record security-relevant events for accountability
+- enforce access checks on the backend, not only in the UI
+
+### 7.3 Security design summary
+
+The security design confirms that:
+
+- credentials must be protected
+- sessions must be time-limited and invalidated on logout
+- backend checks must enforce authorisation
+- data must not be exposed to users without permission
+- AI assistant access must respect the same access model
+- audit logging should be used for privileged and failed operations
+
+This design is compatible with the repository’s M06-05 design document and provides the required security basis for the system.
+
+---
+
+## 8. User Interface and User Experience
+
+The user experience is designed around practical decision-making and clear operational visibility.
+
+### 8.1 Dashboard purpose
+
+The dashboard is intended to present:
+
+- sales trends
+- inventory status
+- demand forecasts
+- stockout-risk alerts
+- restocking suggestions
+- key business summaries
+
+### 8.2 User journey
+
+A typical user journey is:
+
+1. log in to the system
+2. view inventory and sales information
+3. review forecast and risk outputs
+4. inspect recommendation details
+5. confirm whether further action is needed
+6. use the AI assistant for additional contextual queries
+
+The UI design remains intentionally simple and operationally focused, avoiding unnecessary complexity and prioritising actionable information.
+
+### 8.3 Design alignment
+
+The user-design work completed in M06-02, M06-03, and M06-04 aligns with the functional architecture and supports the system goals of monitoring, forecasting, and decision support.
+
+---
+
+## 9. Data and AI Considerations
+
+Retail-X-AI relies on retail data and analytical processing. The current data model includes historical sales, inventory, region, product category, pricing, weather, and related operational variables.
+
+Important design considerations:
+
+- not all fields are appropriate forecasting inputs
+- the system must avoid leakage of non-approved variables
+- missing or incomplete data must be handled explicitly
+- forecasts are decision-support outputs, not guaranteed business actions
+- AI responses must be grounded in approved system data
+
+The design therefore distinguishes clearly between:
+
+- operational data
+- analytical outputs
+- generated recommendations
+- human decision-making
+
+---
+
+## 10. Verification and Evidence
+
+The documentation is considered complete when the following evidence is available:
+
+- system context diagrams reviewed and consistent
+- DFD Level 0 and Level 1 documentation verified
+- architecture design reviewed against system requirements
+- security design reviewed against access-control requirements
+- UI/UX documentation reviewed
+- repository evidence and file structure recorded
+- Git commit history, branch, and pull request link recorded for the issue
+
+### Verification checklist
+
+- [ ] System boundary is consistent with the context diagram
+- [ ] Main processes are represented in the DFDs
+- [ ] Data stores match the logical design
+- [ ] Forecasting, risk, and recommendation flows are traceable
+- [ ] Architecture design reflects the required layers
+- [ ] Security design covers authentication and authorisation
+- [ ] User interface documentation matches the user journey
+- [ ] Documentation is stored in the correct repository location
+- [ ] Git evidence is captured for Issue M17-02
+
+---
+
+## 11. Traceability to Existing Work
+
+| Artefact | Relation |
+|---|---|
+| M04 requirements | Define user needs and expected behaviour |
+| M05 system analysis | Defines context, processes, flows, and diagrams |
+| M06 architecture | Defines system structure and responsibilities |
+| M06 UI/UX | Defines user-facing interactions |
+| M06 security | Defines authentication and role-based access |
+| M17-02 | Consolidates final documentation and evidence |
+
+This documentation provides the final, summarised evidence that the system analysis and design work has been completed and aligned with the repository requirements.
+
+---
+
+## 12. Conclusion
+
+Retail-X-AI is designed as an AI-assisted retail decision-support system that helps users monitor stock, understand demand, detect risk, and receive practical restocking guidance. The system analysis and design work demonstrates that the solution is grounded in business needs, supported by a clear architecture, and aligned with a practical security model.
+
+The repository now contains the core design evidence necessary to support the implementation and future technical build. The final documentation should remain focused on logical design, traceability, and evidence rather than claiming implementation beyond the documented work.
+
+This document serves as the final record for the M17-02 documentation task and should be used as the authoritative summary of the system analysis and design work completed for the project.
+
+---
+
+## 13. Evidence Statement
+
+This documentation has been prepared in support of the assigned work under Issue M17-02 and is aligned with the repository’s existing system-analysis and system-design artefacts. The document is intended to serve as the final evidence bundle for the system analysis and design deliverable within the Retail-X-AI project.
