@@ -6,21 +6,51 @@
 <title>RetailAI Chatbot</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:system-ui,sans-serif;background:#f0f4f8;color:#243b53}
-header{background:#102a43;color:white;padding:1.5rem}
+body{
+  margin:0;
+  font-family:system-ui,sans-serif;
+  color:#eaf5ff;
+  background:
+    linear-gradient(135deg, rgba(5,11,18,.8), rgba(9,22,35,.72)),
+    url('https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1800&q=80') center/cover no-repeat fixed;
+}
+header{
+  background:rgba(10,18,29,.62);
+  backdrop-filter: blur(8px);
+  border-bottom:1px solid rgba(157,202,255,.25);
+  box-shadow:0 8px 30px rgba(2,6,12,.25);
+  padding:1.5rem;
+}
 header div,main{max-width:760px;margin:auto}
 main{padding:1rem}
-.notice{background:#fffbea;border:1px solid #f0d98c;border-radius:10px;padding:1rem}
+.notice{
+  background:rgba(13,23,33,.68);
+  border:1px solid rgba(146,211,255,.38);
+  color:#edf7ff;
+  border-radius:12px;
+  padding:1rem;
+  box-shadow:0 10px 24px rgba(1,5,12,.12);
+}
 #chat{display:flex;flex-direction:column;gap:.8rem;min-height:280px;padding:1rem 0}
 .message{max-width:90%;padding:.85rem 1rem;border-radius:12px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.5}
-.bot{align-self:flex-start;background:white;border:1px solid #d9e2ec}
-.user{align-self:flex-end;background:#d9eafd}
-.label{display:block;font-size:.75rem;font-weight:bold;margin-bottom:.25rem}
+.bot{align-self:flex-start;background:rgba(10,19,28,.8);border:1px solid rgba(143,198,255,.28);box-shadow:0 8px 18px rgba(0,0,0,.18)}
+.user{align-self:flex-end;background:rgba(82,131,255,.2);border:1px solid rgba(132,180,255,.35)}
+.label{display:block;font-size:.75rem;font-weight:bold;margin-bottom:.25rem;color:#9ed7ff}
 form{display:flex;gap:.6rem}
-textarea{flex:1;min-width:0;min-height:54px;padding:.8rem;font:inherit;border:1px solid #bcccdc;border-radius:10px}
-button{padding:.8rem 1.1rem;border:0;border-radius:10px;background:#1565c0;color:white;font-weight:bold;cursor:pointer}
+textarea{
+  flex:1;min-width:0;min-height:54px;padding:.8rem;font:inherit;
+  color:#eaf5ff;background:rgba(9,17,24,.7);
+  border:1px solid rgba(155,212,255,.25);border-radius:10px;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.03);
+}
+textarea::placeholder{color:rgba(219,234,246,.68)}
+button{
+  padding:.8rem 1.1rem;border:0;border-radius:10px;
+  background:linear-gradient(135deg,#3aa5ff,#1f7ae0);color:white;font-weight:bold;cursor:pointer;
+  box-shadow:0 8px 20px rgba(32,108,219,.35);
+}
 button:disabled{opacity:.6}
-#status{padding-top:.5rem;min-height:1.5rem;font-size:.9rem}
+#status{padding-top:.5rem;min-height:1.5rem;font-size:.9rem;color:#d6ebff}
 @media(max-width:480px){form{flex-direction:column}button{min-height:46px}}
 </style>
 </head>
