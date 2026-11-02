@@ -34,4 +34,3 @@ CREATE INDEX IF NOT EXISTS idx_inventory_store_product
 
 CREATE INDEX IF NOT EXISTS idx_inventory_category
     ON inventory_records(category);
-    ON inventory_records(category);
